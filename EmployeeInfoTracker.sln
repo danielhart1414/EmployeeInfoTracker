@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeInfoTracker", "EmployeeInfoTracker.csproj", "{CFAF6B3B-A5E2-467E-AD88-51FAB3C6FFDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFAF6B3B-A5E2-467E-AD88-51FAB3C6FFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFAF6B3B-A5E2-467E-AD88-51FAB3C6FFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFAF6B3B-A5E2-467E-AD88-51FAB3C6FFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFAF6B3B-A5E2-467E-AD88-51FAB3C6FFDD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A87B199C-73E9-46B6-8E7B-D03757AC0746}
+	EndGlobalSection
+EndGlobal
