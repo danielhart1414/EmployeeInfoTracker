@@ -2,6 +2,15 @@
 {
     public class Employee
     {
+        public Employee(string id, string firstName, string lastName, string department, double salary)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Department = department;
+            Salary = salary;
+        }
+
         public string Id { get; set; }
 
         public string FirstName { get; set; }

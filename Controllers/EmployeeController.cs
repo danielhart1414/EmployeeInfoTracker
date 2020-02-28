@@ -13,6 +13,7 @@ namespace EmployeeInfoTracker.Controllers
         {
             var employees = new List<Employee>();
             // retrieve from database
+            employees.Add(new Employee("33", "Davy", "Jones", "Collections", 1000000));
             return employees;
         }
 
