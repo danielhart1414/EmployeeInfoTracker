@@ -34,17 +34,13 @@ export class TrackerComponent implements OnInit {
   }
 
   onSubmit(employeeData) {
-    if (isNaN(this.employeeForm.get('salary').value)) {
-      window.alert('Please enter a number in the Salary field');
+    if (this.allFormFieldsFilled(this.employeeForm)) {
+      window.alert('Please enter information into every field');
       return;
     }
 
-    if (this.employeeForm.get('id').value === '' ||
-        this.employeeForm.get('firstName').value === '' ||
-        this.employeeForm.get('lastName').value === '' ||
-        this.employeeForm.get('department').value === '' ||
-        this.employeeForm.get('salary').value === '') {
-      window.alert('Please enter information into every field');
+    if (isNaN(this.employeeForm.get('salary').value)) {
+      window.alert('Please enter a number in the Salary field');
       return;
     }
 
@@ -52,5 +48,13 @@ export class TrackerComponent implements OnInit {
     this.employeeForm.reset();
 
     window.alert('Your employee data has been submitted');
+  }
+
+  allFormFieldsFilled(form): boolean {
+    return form.get('id').value === '' ||
+      form.get('firstName').value === '' ||
+      form.get('lastName').value === '' ||
+      form.get('department').value === '' ||
+      form.get('salary').value === '';
   }
 }
