@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { EmployeeService, Employee } from '../employee.service';
 
 @Component({
   selector: 'app-tracker',
@@ -9,12 +9,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TrackerComponent implements OnInit {
   employeeForm;
-  public employees: Employee[];
+  employees: Employee[];
 
   constructor(
     private formBuilder: FormBuilder,
-    http: HttpClient,
-    @Inject('BASE_URL') baseUrl: string
+    private employeeService: EmployeeService
   ) {
     this.employeeForm = this.formBuilder.group({
       id: '',
@@ -24,7 +23,7 @@ export class TrackerComponent implements OnInit {
       salary: ''
     });
 
-    http.get<Employee[]>(baseUrl + 'employee')
+    employeeService.getEmployees()
       .subscribe(
         result => { this.employees = result; },
         error => console.error(error)
@@ -35,17 +34,23 @@ export class TrackerComponent implements OnInit {
   }
 
   onSubmit(employeeData) {
+    if (isNaN(this.employeeForm.get('salary').value)) {
+      window.alert('Please enter a number in the Salary field');
+      return;
+    }
+
+    if (this.employeeForm.get('id').value === '' ||
+        this.employeeForm.get('firstName').value === '' ||
+        this.employeeForm.get('lastName').value === '' ||
+        this.employeeForm.get('department').value === '' ||
+        this.employeeForm.get('salary').value === '') {
+      window.alert('Please enter information into every field');
+      return;
+    }
+
     // Process employee data here
     this.employeeForm.reset();
 
     window.alert('Your employee data has been submitted');
   }
-}
-
-interface Employee {
-  id: string;
-  firstName: string;
-  lastName: string;
-  department: string;
-  salary: number;
 }

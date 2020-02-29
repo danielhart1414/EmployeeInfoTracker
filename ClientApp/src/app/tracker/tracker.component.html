@@ -16,7 +16,9 @@
             <td>{{ employee.firstName }}</td>
             <td>{{ employee.lastName }}</td>
             <td>{{ employee.department }}</td>
-            <td>{{ employee.salary }}</td>
+            <td>
+                {{ employee.salary.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) }}
+            </td>
         </tr>
     </tbody>
 </table>
