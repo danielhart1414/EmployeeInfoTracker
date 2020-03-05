@@ -1,6 +1,7 @@
 ﻿using EmployeeInfoTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EmployeeInfoTracker.Controllers
 {
@@ -12,6 +13,10 @@ namespace EmployeeInfoTracker.Controllers
         public IEnumerable<Employee> GetAll()
         {
             var employees = new List<Employee>();
+            using (var db = new EmployeeContext())
+            {
+                employees = db.Employees.ToList();
+            }
             return employees;
         }
 

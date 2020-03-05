@@ -15,6 +15,12 @@ export class TrackerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private employeeService: EmployeeService
   ) {
+    employeeService.getEmployees()
+      .subscribe(
+        result => { this.employees = result; },
+        error => console.error(error)
+      );
+
     this.employeeForm = this.formBuilder.group({
       id: '',
       firstName: '',
@@ -22,12 +28,6 @@ export class TrackerComponent implements OnInit {
       department: '',
       salary: ''
     });
-
-    employeeService.getEmployees()
-      .subscribe(
-        result => { this.employees = result; },
-        error => console.error(error)
-      );
   }
 
   ngOnInit() {
@@ -56,6 +56,12 @@ export class TrackerComponent implements OnInit {
     this.employeeForm.reset();
 
     window.alert('Your employee data has been submitted');
+
+    this.employeeService.getEmployees()
+      .subscribe(
+        result => { this.employees = result; },
+        error => console.error(error)
+      );
   }
 
   anEmployeeFormFieldIsBlank(): boolean {
