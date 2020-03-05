@@ -1,6 +1,6 @@
-<h3 class="mt-4" *ngIf="employees">Your Employees</h3>
+<h3 class="mt-4" *ngIf="employees.length > 0">Your Employees</h3>
 
-<table class='table table-striped mt-3' aria-labelledby="tableLabel" *ngIf="employees">
+<table class='table table-striped mt-3' aria-labelledby="tableLabel" *ngIf="employees.length > 0">
     <thead>
         <tr>
             <th>Id</th>
@@ -25,7 +25,7 @@
 
 <h3 class="mt-4">Submit new employee info here</h3>
 
-<form class="my-3" [formGroup]="employeeForm" (ngSubmit)="onSubmit(employeeForm.value)">
+<form class="my-3" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
     <div>
         <label for="id">
         Id
@@ -58,7 +58,7 @@
         <label for="salary">
         Salary
         </label>
-        <input id="salary" type="text" formControlName="salary">
+        <input id="salary" type="number" formControlName="salary">
     </div>
 
     <button class="btn-info btn-lg mt-1" type="submit">Submit</button>

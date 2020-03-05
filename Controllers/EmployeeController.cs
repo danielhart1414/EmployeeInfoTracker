@@ -12,15 +12,17 @@ namespace EmployeeInfoTracker.Controllers
         public IEnumerable<Employee> GetAll()
         {
             var employees = new List<Employee>();
-            // retrieve from database
-            employees.Add(new Employee("33", "Davy", "Jones", "Collections", 1000000));
             return employees;
         }
 
         [HttpPost]
         public Employee Insert([FromBody]Employee employee)
         {
-            // write the new employee to database
+            using (var db = new EmployeeContext())
+            {
+                db.Employees.Add(employee);
+                db.SaveChanges();
+            }
             return employee;
         }
 

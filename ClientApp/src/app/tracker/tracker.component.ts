@@ -33,8 +33,8 @@ export class TrackerComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(employeeData) {
-    if (this.allFormFieldsFilled(this.employeeForm)) {
+  onSubmit() {
+    if (this.anEmployeeFormFieldIsBlank()) {
       window.alert('Please enter information into every field');
       return;
     }
@@ -44,17 +44,25 @@ export class TrackerComponent implements OnInit {
       return;
     }
 
-    // Process employee data here
+    const newEmployee: Employee = {
+      id: this.employeeForm.get('id').value,
+      firstName: this.employeeForm.get('firstName').value,
+      lastName: this.employeeForm.get('lastName').value,
+      department: this.employeeForm.get('department').value,
+      salary: this.employeeForm.get('salary').value,
+    };
+
+    this.employeeService.insertEmployee(newEmployee).subscribe();
     this.employeeForm.reset();
 
     window.alert('Your employee data has been submitted');
   }
 
-  allFormFieldsFilled(form): boolean {
-    return form.get('id').value === '' ||
-      form.get('firstName').value === '' ||
-      form.get('lastName').value === '' ||
-      form.get('department').value === '' ||
-      form.get('salary').value === '';
+  anEmployeeFormFieldIsBlank(): boolean {
+    return this.employeeForm.get('id').value === '' ||
+      this.employeeForm.get('firstName').value === '' ||
+      this.employeeForm.get('lastName').value === '' ||
+      this.employeeForm.get('department').value === '' ||
+      this.employeeForm.get('salary').value === '';
   }
 }

@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-export interface Employee {
+export class Employee {
   id: string;
   firstName: string;
   lastName: string;
