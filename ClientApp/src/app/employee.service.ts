@@ -31,8 +31,8 @@ export class EmployeeService {
     return this.http.post<Employee>(this.baseUrl + 'employee', employee);
   }
 
-  updateEmployee(employee: Employee): Observable<void> {
-    return this.http.put<void>(
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(
       this.baseUrl + 'employee/' + employee.id,
       employee
     );

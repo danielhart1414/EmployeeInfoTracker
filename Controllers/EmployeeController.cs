@@ -32,17 +32,21 @@ namespace EmployeeInfoTracker.Controllers
         }
 
         [HttpPut("{id}")]
-        public Employee Update(string id, string firstName, string lastName,
-            string department, double salary, [FromBody]Employee employee)
+        public Employee Update(string id, [FromBody]Employee updatedEmployee)
         {
-            employee.Id = id;
-            employee.FirstName = firstName;
-            employee.LastName = lastName;
-            employee.Department = department;
-            employee.Salary = salary;
-
-            // write the updated employee to database
-            return employee;
+            using (var db = new EmployeeContext())
+            {
+                var employee = db.Employees.FirstOrDefault(x => x.Id == id);
+                if (employee is object)
+                {
+                    employee.FirstName = updatedEmployee.FirstName;
+                    employee.LastName = updatedEmployee.LastName;
+                    employee.Department = updatedEmployee.Department;
+                    employee.Salary = updatedEmployee.Salary;
+                }
+                db.SaveChanges();
+            }
+            return updatedEmployee;
         }
 
         [HttpDelete("{id}")]

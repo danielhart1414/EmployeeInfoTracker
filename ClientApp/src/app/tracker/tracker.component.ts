@@ -40,7 +40,7 @@ export class TrackerComponent implements OnInit {
       return;
     }
 
-    const newEmployee: Employee = {
+    const employee: Employee = {
       id: this.employeeForm.get('id').value,
       firstName: this.employeeForm.get('firstName').value,
       lastName: this.employeeForm.get('lastName').value,
@@ -48,7 +48,12 @@ export class TrackerComponent implements OnInit {
       salary: this.employeeForm.get('salary').value,
     };
 
-    this.employeeService.insertEmployee(newEmployee).subscribe();
+    if (this.employees.some(x => x.id === employee.id)) {
+      this.employeeService.updateEmployee(employee).subscribe();
+    } else {
+      this.employeeService.insertEmployee(employee).subscribe();
+    }
+
     this.employeeForm.reset();
 
     window.alert('Your employee data has been submitted');
@@ -69,9 +74,7 @@ export class TrackerComponent implements OnInit {
   }
 
   async deleteRows() {
-    const noRowsSelected = !this.checkboxes.some(checkbox => checkbox === true);
-
-    if (noRowsSelected) {
+    if (this.noRowsSelected()) {
       window.alert('You must select at least one employee in order to use the Delete function.');
       return;
     }
@@ -85,6 +88,30 @@ export class TrackerComponent implements OnInit {
     this.refreshTable();
   }
 
+  update() {
+    if (this.noRowsSelected()) {
+      window.alert('You must select at least one employee in order to use the Update function.');
+      return;
+    }
+
+    if (this.multipleRowsSelected()) {
+      window.alert('You may only select one employee when using the Update function.');
+      return;
+    }
+
+    const positionOfEmployeeToUpdate = this.checkboxes.indexOf(true);
+
+    const employee = this.employees[positionOfEmployeeToUpdate];
+
+    this.employeeForm.setValue({
+      id: employee.id,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      department: employee.department,
+      salary: employee.salary
+    });
+  }
+
   refreshTable() {
     this.employeeService.getEmployees()
       .subscribe(
@@ -95,5 +122,13 @@ export class TrackerComponent implements OnInit {
         },
         error => console.error(error)
       );
+  }
+
+  noRowsSelected(): boolean {
+    return !this.checkboxes.some(checkbox => checkbox === true);
+  }
+
+  multipleRowsSelected(): boolean {
+    return this.checkboxes.filter(checkbox => checkbox === true).length > 1;
   }
 }
