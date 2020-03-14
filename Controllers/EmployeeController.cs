@@ -48,7 +48,15 @@ namespace EmployeeInfoTracker.Controllers
         [HttpDelete("{id}")]
         public void Delete(string id)
         {
-            // delete the employee from the database
+            using (var db = new EmployeeContext())
+            {
+                var employee = db.Employees.FirstOrDefault(x => x.Id == id);
+                if (employee is object)
+                {
+                    db.Employees.Remove(employee);
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }

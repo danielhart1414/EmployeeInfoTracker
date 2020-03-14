@@ -10,17 +10,12 @@ import { EmployeeService, Employee } from '../employee.service';
 export class TrackerComponent implements OnInit {
   employeeForm;
   employees: Employee[];
+  checkboxes: boolean[];
 
   constructor(
     private formBuilder: FormBuilder,
     private employeeService: EmployeeService
   ) {
-    employeeService.getEmployees()
-      .subscribe(
-        result => { this.employees = result; },
-        error => console.error(error)
-      );
-
     this.employeeForm = this.formBuilder.group({
       id: '',
       firstName: '',
@@ -31,6 +26,7 @@ export class TrackerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshTable();
   }
 
   onSubmit() {
@@ -57,11 +53,7 @@ export class TrackerComponent implements OnInit {
 
     window.alert('Your employee data has been submitted');
 
-    this.employeeService.getEmployees()
-      .subscribe(
-        result => { this.employees = result; },
-        error => console.error(error)
-      );
+    this.refreshTable();
   }
 
   anEmployeeFormFieldIsBlank(): boolean {
@@ -70,5 +62,38 @@ export class TrackerComponent implements OnInit {
       this.employeeForm.get('lastName').value === '' ||
       this.employeeForm.get('department').value === '' ||
       this.employeeForm.get('salary').value === '';
+  }
+
+  toggleSelection(event, i) {
+    this.checkboxes[i] = event.target.checked;
+  }
+
+  async deleteRows() {
+    const noRowsSelected = !this.checkboxes.some(checkbox => checkbox === true);
+
+    if (noRowsSelected) {
+      window.alert('You must select at least one employee in order to use the Delete function.');
+      return;
+    }
+
+    for (let i = this.checkboxes.length - 1; i >= 0; i--) {
+      if (this.checkboxes[i]) {
+        await this.employeeService.deleteEmployee(this.employees[i]).toPromise();
+      }
+    }
+
+    this.refreshTable();
+  }
+
+  refreshTable() {
+    this.employeeService.getEmployees()
+      .subscribe(
+        result => {
+          this.employees = result;
+          this.checkboxes = new Array(result.length);
+          this.checkboxes.fill(false);
+        },
+        error => console.error(error)
+      );
   }
 }
