@@ -13,10 +13,10 @@ namespace EmployeeInfoTracker.Controllers
         public IEnumerable<Employee> GetAll()
         {
             var employees = new List<Employee>();
+
             using (var db = new EmployeeContext())
-            {
                 employees = db.Employees.ToList();
-            }
+
             return employees;
         }
 
@@ -43,8 +43,8 @@ namespace EmployeeInfoTracker.Controllers
                     employee.LastName = updatedEmployee.LastName;
                     employee.Department = updatedEmployee.Department;
                     employee.Salary = updatedEmployee.Salary;
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
             }
             return updatedEmployee;
         }

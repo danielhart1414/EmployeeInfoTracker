@@ -98,9 +98,9 @@ export class TrackerComponent implements OnInit {
       return;
     }
 
-    const positionOfEmployeeToUpdate = this.checkboxes.indexOf(true);
+    const positionOfEmployeeInList = this.checkboxes.indexOf(true);
 
-    const employee = this.employees[positionOfEmployeeToUpdate];
+    const employee = this.employees[positionOfEmployeeInList];
 
     this.employeeForm.setValue({
       id: employee.id,

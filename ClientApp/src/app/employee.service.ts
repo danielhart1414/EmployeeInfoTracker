@@ -14,7 +14,7 @@ export class Employee {
   providedIn: 'root'
 })
 export class EmployeeService {
-  baseUrl;
+  baseUrl: string;
 
   constructor(
     private http: HttpClient,
